@@ -55,7 +55,7 @@ if (loading) {
   );
 }
   return (
-    <div className="flex min-h-screen bg-[#0b1220] text-white relative">
+    <div className="flex min-h-screen bg-[#0b1220] text-white">
      <button
   onClick={() => setShowSidebar(true)}
   className="md:hidden fixed top-6 left-6 z-50 bg-black/40 border border-white/10 px-4 py-2 rounded-lg backdrop-blur-xl"
@@ -86,12 +86,8 @@ if (loading) {
 )}
       {/* Sidebar */}
      <div
-  className={`fixed md:static top-0 left-0 h-full w-64 bg-black/90 md:bg-black/30 backdrop-blur-xl border-r border-white/10 p-6 z-50 transform transition-transform duration-300
-  ${
-    showSidebar
-      ? "translate-x-0"
-      : "-translate-x-full md:translate-x-0"
-  }`}
+  className={`fixed md:static top-0 left-0 h-full w-64 bg-black/90 md:bg-black/30 backdrop-blur-xl border-r border-white/10 p-6 z-50 transition-transform duration-300
+  ${showSidebar ? "translate-x-0" : "-translate-x-full md:translate-x-0"}`}
 >
         <h1 className="text-2xl font-bold text-blue-500 mb-8">
           FitTrack Pro
@@ -221,7 +217,7 @@ Calorie Planner
 </div>
 
       {/* Main */}
-      <div className="flex-1 p-4 md:p-8 pt-24 md:pt-8">
+      <div className="flex-1 p-4 md:p-8 pt-24 md:pt-8 md:ml-64">
 
         <h2 className="text-2xl md:text-3xl font-semibold mb-6">
   {workouts.length === 0
