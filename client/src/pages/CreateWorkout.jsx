@@ -42,17 +42,10 @@ const navigate = useNavigate();
   try {
     const token = localStorage.getItem("token");
 
-    const res = await fetch("http://localhost:5000/api/workouts", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify({
-        title,
-        exercises,
-      }),
-    });
+    const res = await API.post("/workouts", {
+  title,
+  exercises,
+});
 
     const data = await res.json();
 alert("Workout Saved!");
