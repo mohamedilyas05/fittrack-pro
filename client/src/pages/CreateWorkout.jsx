@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
+import API from "../api";
 export default function CreateWorkout() {
   const [title, setTitle] = useState("");
   const [exercises, setExercises] = useState([]);
@@ -37,32 +37,30 @@ const navigate = useNavigate();
     setExercises(updated);
   };
 
-  // save workout
-  const saveWorkout = async () => {
+ const saveWorkout = async () => {
   try {
-    const token = localStorage.getItem("token");
-
     const res = await API.post("/workouts", {
-  title,
-  exercises,
-});
+      title,
+      exercises,
+    });
 
-    const data = await res.json();
-alert("Workout Saved!");
-console.log(data);
+    alert("Workout Saved!");
 
-navigate("/dashboard");
-  }  catch (err) {
-  console.log("ERROR:", err);
-  console.log("RESPONSE DATA:", err?.response?.data);
-  console.log("STATUS:", err?.response?.status);
+    console.log(res.data);
 
-  alert(
-    err?.response?.data?.message ||
-    err?.message ||
-    "Error saving workout"
-  );
-}
+    navigate("/dashboard");
+
+  } catch (err) {
+    console.log("ERROR:", err);
+    console.log("RESPONSE DATA:", err?.response?.data);
+    console.log("STATUS:", err?.response?.status);
+
+    alert(
+      err?.response?.data?.message ||
+      err?.message ||
+      "Error saving workout"
+    );
+  }
 };
   return (
     <div className="min-h-screen bg-[#0b1220] text-white p-8">
