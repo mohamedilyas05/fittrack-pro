@@ -7,6 +7,7 @@ export default function Dashboard() {
   const navigate = useNavigate();
   const [showAbout, setShowAbout] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [showSidebar, setShowSidebar] = useState(false);
   useEffect(() => {
   const fetchWorkouts = async () => {
     try {
@@ -21,20 +22,7 @@ export default function Dashboard() {
 
   fetchWorkouts();
 }, []);
-  // fetch workouts
-  useEffect(() => {
-    const fetchWorkouts = async () => {
-      try {
-        const res = await API.get("/workouts");
-        setWorkouts(res.data);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-
-    fetchWorkouts();
-  }, []);
-
+  
   // logout
   const logoutHandler = () => {
     localStorage.removeItem("token");
@@ -68,6 +56,12 @@ if (loading) {
 }
   return (
     <div className="flex min-h-screen bg-[#0b1220] text-white relative">
+     <button
+  onClick={() => setShowSidebar(true)}
+  className="md:hidden fixed top-6 left-6 z-50 bg-black/40 border border-white/10 px-4 py-2 rounded-lg backdrop-blur-xl"
+>
+  ☰
+</button>
       <button
   onClick={() => {
     localStorage.removeItem("token");
@@ -83,9 +77,22 @@ if (loading) {
     className="fixed inset-0 bg-black/50 z-40"
   />
 )}
-      {/* Sidebar */}
-      <div className="hidden md:block w-64 bg-black/30 backdrop-blur-xl border-r border-white/10 p-6">
 
+{showSidebar && (
+  <div
+    onClick={() => setShowSidebar(false)}
+    className="fixed inset-0 bg-black/50 z-40 md:hidden"
+  />
+)}
+      {/* Sidebar */}
+     <div
+  className={`fixed md:static top-0 left-0 h-full w-64 bg-black/90 md:bg-black/30 backdrop-blur-xl border-r border-white/10 p-6 z-50 transform transition-transform duration-300
+  ${
+    showSidebar
+      ? "translate-x-0"
+      : "-translate-x-full md:translate-x-0"
+  }`}
+>
         <h1 className="text-2xl font-bold text-blue-500 mb-8">
           FitTrack Pro
         </h1>
@@ -97,25 +104,37 @@ if (loading) {
           </p>
 
           <button
-            onClick={() => navigate("/create-workout")}
+            onClick={() => {
+  navigate("/create-workout");
+  setShowSidebar(false);
+}}
             className="block hover:text-blue-400"
           >
             Create Workout
           </button>
           <button
-  onClick={() => navigate("/analytics")}
+  onClick={() => {
+  navigate("/analytics");
+  setShowSidebar(false);
+}}
   className="block hover:text-blue-400"
 >
   Analytics
 </button>
 <button
-  onClick={() => navigate("/calorie-planner")}
+  onClick={() => {
+  navigate("/calorie-planner");
+  setShowSidebar(false);
+}}
   className="block hover:text-blue-400 transition"
 >
 Calorie Planner
 </button>
 <button
-  onClick={() => setShowAbout(true)}
+ onClick={() => {
+  setShowAbout(true);
+  setShowSidebar(false);
+}}
   className="text-sm text-gray-300 hover:text-white"
 >
   About
@@ -125,7 +144,7 @@ Calorie Planner
       </div>
       {/* ABOUT SLIDE BAR */}
 <div
-  className={`fixed top-0 right-0 h-full w-80 bg-[#111827] border-l border-gray-800 shadow-2xl transform transition-transform duration-300 z-50 ${
+  className={`fixed top-0 right-0 h-full w-full sm:w-80 bg-[#111827] border-l border-gray-800 shadow-2xl transform transition-transform duration-300 z-50 ${
     showAbout ? "translate-x-0" : "translate-x-full"
   }`}
 >
@@ -202,11 +221,13 @@ Calorie Planner
 </div>
 
       {/* Main */}
-      <div className="flex-1 p-8">
+      <div className="flex-1 p-4 md:p-8 pt-24 md:pt-8">
 
-        <h2 className="text-3xl font-semibold mb-6">
-          Welcome Back 👋
-        </h2>
+        <h2 className="text-2xl md:text-3xl font-semibold mb-6">
+  {workouts.length === 0
+    ? "Welcome to FitTrack Pro 👋"
+    : "Welcome Back 👋"}
+</h2>
 
 {/* Cards */}
 
@@ -219,7 +240,7 @@ Calorie Planner
       Total Workouts
     </p>
 
-    <h3 className="text-4xl font-bold mt-2 text-white group-hover:text-blue-400 transition">
+    <h3 className="text-3xl md:text-4xl font-bold mt-2 text-white group-hover:text-blue-400 transition">
       {totalWorkouts}
     </h3>
 
@@ -236,7 +257,7 @@ Calorie Planner
       Total Volume
     </p>
 
-    <h3 className="text-4xl font-bold mt-2 text-white group-hover:text-green-400 transition">
+    <h3 className="text-3xl md:text-4xl font-bold mt-2 text-white group-hover:text-green-400 transition">
       {totalVolume} <span className="text-lg text-gray-400">kg</span>
     </h3>
 
