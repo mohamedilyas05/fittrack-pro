@@ -126,38 +126,6 @@ Features:
 
 ---
 
-# 🖼️ Project Screenshots
-
-> Add screenshots here.
-
-```md
-assets/
-
-dashboard.png
-
-workouts.png
-
-nutrition.png
-
-chat.png
-
-analytics.png
-```
-
-Example:
-
-```md
-![Dashboard](./assets/dashboard.png)
-
-![Workouts](./assets/workouts.png)
-
-![Nutrition](./assets/nutrition.png)
-
-![Analytics](./assets/analytics.png)
-```
-
----
-
 # 🛠️ Tech Stack
 
 | Technology | Purpose |
